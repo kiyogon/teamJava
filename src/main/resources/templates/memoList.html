@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>メモ一覧</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded shadow-md w-full max-w-3xl">
+        <h1 class="text-2xl font-bold mb-4">メモ一覧</h1>
+        <div class="mb-4">
+            <a th:href="@{/memos/new}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300">新しいメモを追加</a>
+        </div>
+        <table class="min-w-full bg-white">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="py-2 px-4 border-b">課題</th>
+                    <th class="py-2 px-4 border-b">方針</th>
+                    <th class="py-2 px-4 border-b">サイコロの結果</th>
+                    <th class="py-2 px-4 border-b">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="memo : ${memos}" class="border-b">
+                    <td class="py-2 px-4" th:text="${memo.description}">課題の内容</td>
+                    <td class="py-2 px-4" th:text="${memo.policy}">方針の内容</td>
+                    <td class="py-2 px-4" th:text="${memo.diceResult}">サイコロの結果</td>
+                    <td class="py-2 px-4">
+                        <a th:href="@{/memos/edit/{id}(id=${memo.id})}" class="text-blue-500 hover:underline">編集</a>
+                        <form th:action="@{/memos/delete/{id}(id=${memo.id})}" method="post" class="inline">
+                            <button type="submit" class="text-red-500 hover:underline ml-2">削除</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mt-6">
+            <a th:href="@{/}" class="text-blue-500 hover:underline">ホームに戻る</a>
+        </div>
+    </div>
+</body>
+</html>
